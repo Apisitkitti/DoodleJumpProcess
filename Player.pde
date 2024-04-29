@@ -25,16 +25,12 @@ class Player
     ellipse(posX, posY-50, sizeCircle, sizeCircle);
   }
   void playerJump()
-  { 
-   if(jumpApprove)
-   {
-     posY -= jumpForce;
-   }
-   
-  }
-  void fallDown()
   {
-    if(fallApprove)posY +=jumpForce;
+    posY -= jumpForce;
+  }
+  void playerFall()
+  {
+    posY += jumpForce;
   }
   void playerLeft()
   {
@@ -46,18 +42,18 @@ class Player
   }
   void bounce()
   {
-    if((sizeSquareY/2)>=height)
+    if ((sizeSquareY/2)>=height)
     {
       posY+=jumpForce;
     }
   }
   void warp()
   {
-    if(posX-sizeSquareX/2 >width  )
+    if (posX-sizeSquareX/2 >width  )
     {
       posX = 0;
     }
-    if(posX+sizeSquareX/2 < 0)
+    if (posX+sizeSquareX/2 < 0)
     {
       posX = width;
     }

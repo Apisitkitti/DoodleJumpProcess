@@ -8,33 +8,15 @@ void setup()
   frameRate(60);
   size(500, 500);
   background(255);
-  player = new Player(width/2, width, 5);
+  player = new Player(width/2,height-25, 5);
   createObtacle();
 }
 void draw()
 {
-  count++;  
+  count++;
   background(255);
   player.playerCreator();
-  
-  if (count<20)
-  {
-    player.playerJump();
-  } 
-  else if (player.sizeSquareY+25<height)
-  {
-    player.jumpApprove = false;
-    player.fallApprove = true;
-    player.fallDown();
-  }
- if(player.sizeSquareY+25>height)
-  {
-    count = 0;
-    println("test");
-    player.jumpApprove = true;
-    player.fallApprove = false;
-    
-  }
+  jumpController();
   player.bounce();
   player.warp();
   Movement();
@@ -79,4 +61,22 @@ void Movement()
       player.playerRight();
     }
   }
+}
+void jumpController()
+{
+  if (count<=10 && player.jumpApprove)
+  {
+    player.playerJump();
+  } 
+  else if (player.posY+player.sizeSquareY/2<=height)
+  {
+   player.playerFall();
+   player.jumpApprove = false; 
+  }
+  else
+  {
+    count = 0;
+    player.jumpApprove = true;
+  }
+  
 }
