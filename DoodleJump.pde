@@ -34,7 +34,7 @@ void createObtacle()
   for (int i = 0; i<platform.length; i++)
   {
     posX = random(100, 400);
-    posY = random(0, 400);
+    posY = random(0, 450);
     r = random(0, 255);
     g = random(0, 255);
     b = random(0, 255);
@@ -64,11 +64,11 @@ void Movement()
 }
 void jumpController()
 {
-  if (count<=10 && player.jumpApprove)
+  if (count<=20 && player.jumpApprove)
   {
     player.playerJump();
   } 
-  else if (player.posY+player.sizeSquareY/2<=height)
+  else if (player.posY  +player.sizeSquareY/2<=height)
   {
    player.playerFall();
    player.jumpApprove = false; 
