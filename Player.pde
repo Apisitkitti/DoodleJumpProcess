@@ -1,13 +1,13 @@
 class Player
 {
-  int sizeCircle =50;
-  int sizeSquareX =50;
-  int sizeSquareY = 50;
+  int sizeCircle =30;
+  int sizeSquareX =30;
+  int sizeSquareY = 40;
   boolean jumpApprove = true;
   boolean fallApprove = false;
   float posX, posY, jumpForce;
   float speed = 10;
-
+  
   Player(float posX, float posY, float jumpForce)
   {
     this.posX = posX;
@@ -56,6 +56,19 @@ class Player
     if (posX+sizeSquareX/2 < 0)
     {
       posX = width;
+    }
+  }
+  void bounce(Platform[] p){ 
+    for (Platform platform : p) {
+        if (posX + sizeSquareX/2 > platform.posX &&  
+            posX - sizeSquareX/2 < platform.posX + platform.sizeX &&  
+            posY + sizeSquareY/2 > platform.posY &&  
+            posY - sizeSquareY/2 < platform.posY + platform.sizeY && 
+            player.jumpApprove == false) {
+              posY = platform.posY - sizeSquareY/2; 
+              count = 0; 
+              player.jumpApprove = true; 
+        }
     }
   }
 }

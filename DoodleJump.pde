@@ -17,10 +17,10 @@ void draw()
   background(255);
   player.playerCreator();
   jumpController();
-  player.bounce();
+  player.bounce(platform);
   player.warp();
   Movement();
-
+  
 
   for (int i = 0; i<platform.length; i++)
   {
@@ -40,13 +40,12 @@ void createObtacle()
     b = random(0, 255);
     if (indexPosX != posX && indexPosY != posY)
     {
-      platform[i] = new Platform(posX+50, posY+20, 50, 10, r, g, b);
+      platform[i] = new Platform(posX+50, posY+20, 60, 10, r, g, b);
       indexPosX = posX;
       indexPosY = posY;
     }
   }
 }
-
 
 void Movement()
 {
@@ -78,5 +77,5 @@ void jumpController()
     count = 0;
     player.jumpApprove = true;
   }
-  
+ 
 }
