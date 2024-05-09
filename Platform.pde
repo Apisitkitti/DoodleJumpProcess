@@ -13,7 +13,7 @@ class Platform
   }
   void genPlatform()
   {
-    //rectMode(CENTER);
+    rectMode(CENTER);
     fill(r,g,b);
     rect(posX, posY,sizeX,sizeY);
   }
