@@ -1,6 +1,7 @@
 class Platform
 {
   float posX, posY,sizeX,sizeY,r,g,b;
+  boolean FallPlat =false;
   Platform(float posX, float posY, float sizeX,float sizeY,float r,float g,float b)
   {
     this.posX = posX;
@@ -17,5 +18,12 @@ class Platform
     fill(r,g,b);
     rect(posX, posY,sizeX,sizeY);
   }
-  
+   boolean Fall() {
+    posY += 2.2;
+    // Check if the platform has reached a certain threshold
+    if (posY > height) {
+      FallPlat = true;
+    }
+    return FallPlat;
+  }
 }

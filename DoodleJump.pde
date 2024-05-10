@@ -1,5 +1,5 @@
 import processing.sound.*;
-Platform[] platform = new Platform[40];
+Platform[] platform = new Platform[20];
 Player player;
 float posX, posY, r, g, b;
 int count = 0;
@@ -30,9 +30,11 @@ void draw()
   Movement();
   
 
-  for (int i = 0; i<platform.length; i++)
-  {
+   for (int i = 0; i<platform.length; i++) {
     platform[i].genPlatform();
+    if (platform[i].Fall()) {
+      spawnNewPlatform();
+    }
   }
 }
 
@@ -63,7 +65,26 @@ void createObtacle()
       currentY -= random(70,90);//Spawn Next Plat posY every -70
     }
   }
+  
 }
+void spawnNewPlatform() {
+  println("Spawn new Plat");
+  float currentY = platform[platform.length - 1].posY - random(70, 90);
+  posX = random(60,400);
+  float r = random(0, 255);
+  float g = random(0, 255);
+  float b = random(0, 255);
+  
+  Platform newPlatform = new Platform(posX, currentY, 60, 10, r, g, b);
+  
+  // Shift existing platforms up and replace the last platform with the new one
+  for (int i = 0; i < platform.length - 1; i++) {
+    platform[i] = platform[i + 1];
+  }
+  platform[platform.length - 1] = newPlatform;
+}
+
+
 
 void Movement()
 {
@@ -77,7 +98,7 @@ void Movement()
     {
       player.playerRight();
     }
-  println(level);
+ // println(level);
 }
 void jumpController()
 {
