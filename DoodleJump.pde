@@ -63,7 +63,7 @@ void Movement()
     {
       player.playerLeft();
     }
-    if (level >0 )
+    if (level >0.1 )
     {
       player.playerRight();
     }
