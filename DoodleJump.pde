@@ -1,13 +1,21 @@
+import processing.sound.*;
 Platform[] platform = new Platform[100];
 Player player;
 float posX, posY, r, g, b;
 int count = 0;
 float indexPosX, indexPosY;
+AudioIn input;
+Amplitude amp;
 void setup()
 {
   frameRate(60);
   size(500, 1000);
   background(255);
+  input = new AudioIn(this,0);
+  input.start();
+  
+  amp = new Amplitude(this);
+  amp.input(input);
   player = new Player(width/2,height-25, 5);
   createObtacle();
 }
@@ -49,17 +57,17 @@ void createObtacle()
 
 void Movement()
 {
-  if (keyPressed)
-  {
-    if (key == 'a')
+   float level = amp.analyze();
+
+    if (level == 0)
     {
       player.playerLeft();
     }
-    if (key == 'd' )
+    if (level >0 )
     {
       player.playerRight();
     }
-  }
+  println(level);
 }
 void jumpController()
 {
