@@ -59,7 +59,7 @@ void Movement()
 {
    float level = amp.analyze();
 
-    if (level == 0)
+    if (level <0.1)
     {
       player.playerLeft();
     }
