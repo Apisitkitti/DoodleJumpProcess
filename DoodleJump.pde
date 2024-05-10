@@ -1,5 +1,5 @@
 import processing.sound.*;
-Platform[] platform = new Platform[100];
+Platform[] platform = new Platform[40];
 Player player;
 float posX, posY, r, g, b;
 int count = 0;
@@ -16,7 +16,7 @@ void setup()
   
   amp = new Amplitude(this);
   amp.input(input);
-  player = new Player(width/2,height-25, 5);
+  player = new Player(width/2,height-200, 5);
   createObtacle();
 }
 void draw()
@@ -39,10 +39,19 @@ void draw()
 
 void createObtacle()
 {
-  for (int i = 0; i<platform.length; i++)
+  platform[0] = new Platform(width/2,height-100,500,10,r,g,b);
+  float currentY = height - 100 -50; //Above Plat[0] posY>50 
+  for (int i = 1; i<platform.length; i++)
   {
-    posX = random(60, 400);
-    posY = random(0, height);
+    if(i % 2 ==0){ //if platform even number will spawn plat 60-150
+      posX =random(60,150); 
+    }
+    else{//if platform odd number will spawn plat 330-400
+      posX = random(330,400);
+    }
+    //posX = random(60,400);//if don't want odd and even number
+    //posY = random(0, height);
+    posY = currentY;
     r = random(0, 255);
     g = random(0, 255);
     b = random(0, 255);
@@ -51,6 +60,7 @@ void createObtacle()
       platform[i] = new Platform(posX, posY, 60, 10, r, g, b);
       indexPosX = posX;
       indexPosY = posY;
+      currentY -= random(70,90);//Spawn Next Plat posY every -70
     }
   }
 }
