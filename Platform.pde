@@ -19,7 +19,7 @@ class Platform
     rect(posX, posY,sizeX,sizeY);
   }
    boolean Fall() {
-    posY += 2.2;
+    posY += 1.1;
     // Check if the platform has reached a certain threshold
     if (posY > height) {
       FallPlat = true;

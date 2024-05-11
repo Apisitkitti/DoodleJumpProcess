@@ -13,7 +13,6 @@ void setup()
   background(255);
   input = new AudioIn(this,0);
   input.start();
-  
   amp = new Amplitude(this);
   amp.input(input);
   player = new Player(width/2,height-200, 5);
@@ -108,7 +107,7 @@ void jumpController()
   {
     player.playerJump();
   } 
-  else if (player.posY  +player.sizeSquareY/2<=height)
+  else if (player.posY+player.sizeSquareY/2<=height)
   {
    player.playerFall();
    player.jumpApprove = false; 
