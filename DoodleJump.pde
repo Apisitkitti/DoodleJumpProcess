@@ -46,10 +46,10 @@ void createObtacle()
   for (int i = 1; i<platform.length; i++)
   {
     if(i % 2 ==0){ //if platform even number will spawn plat 60-150
-      posX =random(60,150); 
+      posX =random(60,400); 
     }
     else{//if platform odd number will spawn plat 330-400
-      posX = random(330,400);
+      posX = random(60,400);
     }
     //posX = random(60,400);//if don't want odd and even number
     //posY = random(0, height);
@@ -89,15 +89,17 @@ void spawnNewPlatform() {
 void Movement()
 {
    float level = amp.analyze();
-
-    if (level <0.1)
+  if(keyPressed)
+  {
+    if (key == 'a')
     {
       player.playerLeft();
     }
-    if (level >0.1 )
+    if (key == 'd' )
     {
       player.playerRight();
     }
+  }
  // println(level);
 }
 void jumpController()
