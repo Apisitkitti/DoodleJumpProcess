@@ -2,6 +2,7 @@ class Platform
 {
   float posX, posY,sizeX,sizeY,r,g,b;
   boolean FallPlat =false;
+  int hitTime = 2;
   Platform(float posX, float posY, float sizeX,float sizeY,float r,float g,float b)
   {
     this.posX = posX;
@@ -17,9 +18,10 @@ class Platform
     rectMode(CENTER);
     fill(r,g,b);
     rect(posX, posY,sizeX,sizeY);
+  
   }
    boolean Fall() {
-    posY += 1.1;
+    posY += 2;
     // Check if the platform has reached a certain threshold
     if (posY > height) {
       FallPlat = true;

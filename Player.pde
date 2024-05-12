@@ -67,8 +67,7 @@ class Player
             player.jumpApprove == false) {
               posY = platform.posY - sizeSquareY/2; 
               count = 0; 
-              player.jumpApprove = true; 
-          
+              player.jumpApprove = true;          
         }
     }
   }
