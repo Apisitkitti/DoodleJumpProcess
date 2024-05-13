@@ -1,37 +1,39 @@
 import processing.sound.*;
-Platform[] platform = new Platform[20];
-gameUI gameStart = new gameUI(width/2, height/2, 200, 200);
+Platform[] platform = new Platform[6];
+gameUI gameStart ;
 Player player;
-float posX, posY, r, g, b;
+float posX, posY;
 int count = 0;
 float indexPosX, indexPosY;
-boolean start = false;
+boolean checkAlive;
+PImage backgroundIMG;
 AudioIn input;
 Amplitude amp;
 void setup()
 {
   frameRate(60);
-  size(500, 1000);
-  background(255);
-  gameStart = new gameUI(width/2, height/2, 300, 200);
+  size(500, 800);
+  backgroundIMG = loadImage("./img/background.png");
+  gameStart = new gameUI(width/2, height/2, 300, 200,false);
   input = new AudioIn(this, 0);
   input.start();
   amp = new Amplitude(this);
   amp.input(input);
   player = new Player(width/2, height-200, 5);
   createObtacle();
+  checkAlive = true;
 }
 void draw()
 {
   count++;
-  background(255);
-
-  if (start)
+  background(backgroundIMG);
+  if (gameStart.start && checkAlive)
   {
     gameStart.timeDraw();
     player.playerCreator();
     jumpController();
     player.bounce(platform);
+    dead();
     player.warp();
     Movement();
     for (int i = 0; i<platform.length; i++) {
@@ -42,6 +44,7 @@ void draw()
     }
   } else
   {
+    image(backgroundIMG,0,0);
     gameStart.UiDraw();
   }
 }
@@ -49,24 +52,15 @@ void draw()
 
 void createObtacle()
 {
-  platform[0] = new Platform(width/2, height-100, 500, 10, r, g, b);
-  float currentY = height - 100 -50; //Above Plat[0] posY>50
+  platform[0] = new Platform(width/2, height-100, 100, 10);
+  float currentY = height - 100 -50;
   for (int i = 1; i<platform.length; i++)
-  {
-    if (i % 2 ==0) { //if platform even number will spawn plat 60-150
-      posX =random(60, 400);
-    } else {//if platform odd number will spawn plat 330-400
-      posX = random(60, 400);
-    }
-    //posX = random(60,400);//if don't want odd and even number
-    //posY = random(0, height);
+  {//if platform even number will spawn plat 60-150
+    posX =random(60, 400);
     posY = currentY;
-    r = random(0, 255);
-    g = random(0, 255);
-    b = random(0, 255);
     if (indexPosX != posX && indexPosY != posY)
     {
-      platform[i] = new Platform(posX, posY, 60, 10, r, g, b);
+      platform[i] = new Platform(posX, posY, 80, 10);
       indexPosX = posX;
       indexPosY = posY;
       currentY -= random(70, 90);//Spawn Next Plat posY every -70
@@ -76,14 +70,9 @@ void createObtacle()
 
 
 void spawnNewPlatform() {
-  println("Spawn new Plat");
   float currentY = platform[platform.length - 1].posY - random(70, 90);
   posX = random(60, 400);
-  float r = random(0, 255);
-  float g = random(0, 255);
-  float b = random(0, 255);
-
-  Platform newPlatform = new Platform(posX, currentY, 60, 10, r, g, b);
+  Platform newPlatform = new Platform(posX, currentY, 80, 10);
 
   // Shift existing platforms up and replace the last platform with the new one
   for (int i = 0; i < platform.length - 1; i++) {
@@ -107,14 +96,17 @@ void Movement()
       player.playerRight();
     }
   }
-  // println(level);
+  if(level>0.01)
+  {
+    player.posY-= 5;
+  }
 }
 
 
 
 void jumpController()
 {
-  if (count<=20 && player.jumpApprove)
+  if (count<=25 && player.jumpApprove)
   {
     player.playerJump();
   } else if (player.posY+player.sizeSquareY/2<=height)
@@ -127,11 +119,22 @@ void jumpController()
     player.jumpApprove = true;
   }
 }
-
+void dead()
+{
+  if(player.sizeSquareY+player.posY >= height)
+  {
+    checkAlive = false;
+    gameStart.count = 0;
+    player.posY = height-200;
+    player.posX = width/2;
+    createObtacle();
+  }
+}
 void mousePressed()
 {
   if (mouseX<gameStart.posX+gameStart.sizeX && mouseX>=gameStart.posX-gameStart.sizeX && mouseY<gameStart.posY+gameStart.sizeY && mouseY>gameStart.posY-gameStart.sizeY )
   {
-    start = true;
+    gameStart.start = true;
+    checkAlive = true;
   }
 }

@@ -1,11 +1,11 @@
+PImage character;
 class Player
 {
-  int sizeCircle =30;
-  int sizeSquareX =30;
-  int sizeSquareY = 40;
+  int sizeSquareX =60;
+  int sizeSquareY = 70;
   boolean jumpApprove = true;
   boolean fallApprove = false;
-  float posX, posY, jumpForce;
+  float posX, posY, jumpForce,gravity;
   float speed = 10;
   
   Player(float posX, float posY, float jumpForce)
@@ -13,24 +13,23 @@ class Player
     this.posX = posX;
     this.posY = posY;
     this.jumpForce = jumpForce;
+    character = loadImage("./img/ninja.png");
   }
   void playerCreator()
   {
-    fill(0);
-    noStroke();
-    ellipseMode(CENTER);
-    rectMode(CENTER);
-    rect(posX, posY, sizeSquareX, sizeSquareY);
-    fill(#FF3B3B);
-    ellipse(posX, posY-50, sizeCircle, sizeCircle);
+    imageMode(CENTER);
+    image(character,posX,posY,sizeSquareX, sizeSquareY);
   }
   void playerJump()
   {
     posY -= jumpForce;
+    gravity = 1;
   }
   void playerFall()
   {
-    posY += jumpForce;
+    gravity = 2.5;
+    posY += jumpForce+gravity;
+    gravity = gravity+0.1;
   }
   void playerLeft()
   {
@@ -39,13 +38,6 @@ class Player
   void playerRight()
   {
     posX+=speed;
-  }
-  void bounce()
-  {
-    if ((sizeSquareY/2)>=height)
-    {
-      posY+=jumpForce;
-    }
   }
   void warp()
   {
@@ -58,16 +50,13 @@ class Player
       posX = width;
     }
   }
+ 
   void bounce(Platform[] p){ 
     for (Platform platform : p) {
-        if (posX + sizeSquareX/2 > platform.posX &&  
-            posX - sizeSquareX/2 < platform.posX + platform.sizeX &&  
-            posY + sizeSquareY/2 > platform.posY &&  
-            posY - sizeSquareY/2 < platform.posY + platform.sizeY && 
-            player.jumpApprove == false) {
-              posY = platform.posY - sizeSquareY/2; 
-              count = 0; 
-              player.jumpApprove = true;          
+        if(posX < platform.posX + platform.sizeX && posX + sizeSquareX > platform.posX && posY < platform.posY + platform.sizeY && posY + sizeSquareY > platform.posY && player.jumpApprove == false) {
+            posY = platform.posY - sizeSquareY/2; 
+            count = 0; 
+            jumpApprove = true; // Assuming jumpApprove is a member variable of Player
         }
     }
   }

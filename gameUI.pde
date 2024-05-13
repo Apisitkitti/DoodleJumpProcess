@@ -2,12 +2,15 @@ class gameUI
 {
   int sizeX, sizeY;
   float posX, posY;
-  gameUI(float posX, float posY, int sizeX, int sizeY)
+  int count;
+  boolean start = false;
+  gameUI(float posX, float posY, int sizeX, int sizeY,boolean start)
   {
     this.posX = posX;
     this.posY = posY;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
+    this.start = start;
   }
   void UiDraw()
   {
@@ -25,7 +28,8 @@ class gameUI
    textAlign(LEFT,TOP);
    fill(0);
    textSize(50);
-   text("score : "+ (millis()/1000),0,0 );
+   text("score : "+ (count/100),0,0 );
+   count++;
   }
 }
  

@@ -1,27 +1,28 @@
+PImage platformSkin;
 class Platform
 {
-  float posX, posY,sizeX,sizeY,r,g,b;
+  float posX, posY,sizeX,sizeY;
+  float speedUp;
   boolean FallPlat =false;
   int hitTime = 2;
-  Platform(float posX, float posY, float sizeX,float sizeY,float r,float g,float b)
+  Platform(float posX, float posY, float sizeX,float sizeY)
   {
     this.posX = posX;
     this.posY = posY;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
-    this.r = r;
-    this.g = g;
-    this.b = b;
+    this.speedUp = 2;
+    platformSkin = loadImage("./img/platform.png");
   }
   void genPlatform()
   {
-    rectMode(CENTER);
-    fill(r,g,b);
-    rect(posX, posY,sizeX,sizeY);
-  
+    imageMode(CENTER);
+    image(platformSkin,posX,posY,sizeX,sizeY);
   }
+  
    boolean Fall() {
-    posY += 2;
+    posY += speedUp;
+    speedUp+=0.003;
     // Check if the platform has reached a certain threshold
     if (posY > height) {
       FallPlat = true;
