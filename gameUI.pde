@@ -27,7 +27,6 @@ class gameUI
   void timeDraw()
   {
    textAlign(LEFT,TOP);
-   
    textFont(uiFont);
    fill(0);
    text("score : "+ (count/100),0,0 );
