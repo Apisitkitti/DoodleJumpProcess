@@ -14,7 +14,7 @@ void setup()
   frameRate(60);
   size(500, 800);
   backgroundIMG = loadImage("./img/background.png");
-  gameStart = new gameUI(width/2, height/2, 300, 200,false);
+  gameStart = new gameUI(width/2, height/2, 500, 600,false);
   input = new AudioIn(this, 0);
   input.start();
   amp = new Amplitude(this);

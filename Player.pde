@@ -27,7 +27,7 @@ class Player
   }
   void playerFall()
   {
-    gravity = 2.5;
+    gravity = 3.2;
     posY += jumpForce+gravity;
     gravity = gravity+0.1;
   }

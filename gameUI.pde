@@ -1,3 +1,5 @@
+PImage menuGame,button;
+PFont uiFont;
 class gameUI
 {
   int sizeX, sizeY;
@@ -11,23 +13,23 @@ class gameUI
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.start = start;
+    menuGame = loadImage("./img/menu.png");
+    button = loadImage("./img/button.png");
+    uiFont = createFont("al-seana",50);
+    
   }
   void UiDraw()
   {
-    rectMode(CENTER);
-    fill(0);
-    stroke(0);
-    rect(posX,posY,sizeX,sizeY);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize((sizeX/2)-50);
-    text("Start", posX,posY);
+    background(menuGame);
+    imageMode(CENTER);
+    image(button,posX,posY,sizeX,sizeY);
   }
   void timeDraw()
   {
    textAlign(LEFT,TOP);
+   
+   textFont(uiFont);
    fill(0);
-   textSize(50);
    text("score : "+ (count/100),0,0 );
    count++;
   }
