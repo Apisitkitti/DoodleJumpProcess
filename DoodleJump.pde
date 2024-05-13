@@ -13,15 +13,7 @@ void setup()
 {
   frameRate(60);
   size(500, 800);
-  backgroundIMG = loadImage("./img/background.png");
-  gameStart = new gameUI(width/2, height/2, 300, 200,false);
-  input = new AudioIn(this, 0);
-  input.start();
-  amp = new Amplitude(this);
-  amp.input(input);
-  player = new Player(width/2, height-200, 5);
-  createObtacle();
-  checkAlive = true;
+  startup();
 }
 void draw()
 {
@@ -30,6 +22,7 @@ void draw()
   if (gameStart.start && checkAlive)
   {
     gameStart.timeDraw();
+    pixel();
     player.playerCreator();
     jumpController();
     player.bounce(platform);
@@ -44,7 +37,7 @@ void draw()
     }
   } else
   {
-    image(backgroundIMG,0,0);
+    image(backgroundIMG, 0, 0);
     gameStart.UiDraw();
   }
 }
@@ -96,7 +89,7 @@ void Movement()
       player.playerRight();
     }
   }
-  if(level>0.01)
+  if (level>0.01)
   {
     player.posY-= 5;
   }
@@ -121,7 +114,7 @@ void jumpController()
 }
 void dead()
 {
-  if(player.sizeSquareY+player.posY >= height)
+  if (player.sizeSquareY+player.posY >= height)
   {
     checkAlive = false;
     gameStart.count = 0;
@@ -137,4 +130,53 @@ void mousePressed()
     gameStart.start = true;
     checkAlive = true;
   }
+}
+void startup()
+{
+  backgroundIMG = loadImage("./img/background.png");
+  gameStart = new gameUI(width/2, height/2, 300, 200, false);
+  input = new AudioIn(this, 0);
+  input.start();
+  amp = new Amplitude(this);
+  amp.input(input);
+  player = new Player(width/2, height-200, 5);
+  createObtacle();
+  checkAlive = true;
+  loadPixels();
+  backgroundIMG.loadPixels();
+}
+void pixel()
+{
+  for (int x = 0; x < backgroundIMG.width; x++ ) {
+    for (int y = 0; y < backgroundIMG.height; y++ ) {
+
+      // Calculate the 1D pixel location
+      int loc = x + y*backgroundIMG.width;
+
+      // Get the R,G,B values from image
+      float r = red  (backgroundIMG.pixels[loc]);
+      float g = green(backgroundIMG.pixels[loc]);
+      float b = blue (backgroundIMG.pixels[loc]);
+
+      // We calculate a multiplier ranging from 0.0 to 8.0 based on mouseX position.
+      // That multiplier changes the RGB value of each pixel.
+      float distance = dist(player.posX, player.posY, x, y);
+
+      float adjustBrightness = map(distance, 0, 100, 8, 0);
+      r *= adjustBrightness;
+      g *=adjustBrightness ;
+      b *= adjustBrightness;
+
+      // The RGB values are constrained between 0 and 255 before being set as a new color.
+      r = constrain(r, 0, 255);
+      g = constrain(g, 0, 255);
+      b = constrain(b, 0, 255);
+
+      // Make a new color and set pixel in the window
+      color c = color(r, g, b);
+      pixels[loc] = c;
+    }
+  }
+
+  updatePixels();
 }
