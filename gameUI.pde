@@ -1,4 +1,4 @@
-PImage menuGame,button;
+PImage menuGame, button;
 PFont uiFont;
 class gameUI
 {
@@ -6,7 +6,9 @@ class gameUI
   float posX, posY;
   int count;
   boolean start = false;
-  gameUI(float posX, float posY, int sizeX, int sizeY,boolean start)
+  int highscore;
+  int score;
+  gameUI(float posX, float posY, int sizeX, int sizeY, boolean start)
   {
     this.posX = posX;
     this.posY = posY;
@@ -15,22 +17,30 @@ class gameUI
     this.start = start;
     menuGame = loadImage("./img/menu.png");
     button = loadImage("./img/button.png");
-    uiFont = createFont("al-seana",50);
-    
+    uiFont = createFont("./font/al-seana.otf",10);
   }
   void UiDraw()
   {
     background(menuGame);
     imageMode(CENTER);
-    image(button,posX,posY,sizeX,sizeY);
+    image(button, posX, posY, sizeX, sizeY);
+    textAlign(CENTER,BOTTOM);
+    textFont(uiFont);
+    textSize(40);
+    fill(0);
+    text("Highscore : "+ highscore, posX+120,posY+210);
   }
   void timeDraw()
   {
-   textAlign(LEFT,TOP);
-   textFont(uiFont);
-   fill(0);
-   text("score : "+ (count/100),0,0 );
-   count++;
+    textAlign(LEFT, TOP);
+    textFont(uiFont);
+    textSize(40);
+    fill(0);
+    text("score : "+ (count/100), 0, 0 );
+    count++;
+    if (highscore<(count/100))
+    {
+      highscore = count/100;
+    }
   }
 }
- 

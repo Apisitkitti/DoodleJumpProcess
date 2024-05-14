@@ -14,7 +14,7 @@ void setup()
   frameRate(60);
   size(500, 800);
   backgroundIMG = loadImage("./img/background.png");
-  gameStart = new gameUI(width/2, height/2, 500, 600,false);
+  gameStart = new gameUI(width/2, height/2, 500, 600, false);
   input = new AudioIn(this, 0);
   input.start();
   amp = new Amplitude(this);
@@ -44,7 +44,7 @@ void draw()
     }
   } else
   {
-    image(backgroundIMG,0,0);
+    image(backgroundIMG, 0, 0);
     gameStart.UiDraw();
   }
 }
@@ -96,7 +96,7 @@ void Movement()
       player.playerRight();
     }
   }
-  if(level>0.01)
+  if (level>0.01)
   {
     player.posY-= 5;
   }
@@ -121,7 +121,7 @@ void jumpController()
 }
 void dead()
 {
-  if(player.sizeSquareY+player.posY >= height)
+  if (player.sizeSquareY+player.posY >= height)
   {
     checkAlive = false;
     gameStart.count = 0;
