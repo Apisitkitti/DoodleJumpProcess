@@ -1,5 +1,5 @@
 import processing.sound.*;
-Platform[] platform = new Platform[6];
+Platform[] platform = new Platform[4];
 gameUI gameStart ;
 Player player;
 float posX, posY;
@@ -74,7 +74,6 @@ void spawnNewPlatform() {
   posX = random(60, 400);
   Platform newPlatform = new Platform(posX, currentY, 80, 10);
 
-  // Shift existing platforms up and replace the last platform with the new one
   for (int i = 0; i < platform.length - 1; i++) {
     platform[i] = platform[i + 1];
   }
